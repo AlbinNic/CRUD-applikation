@@ -2,7 +2,7 @@ const gameForm = document.getElementById('game-form');
 const gameList = document.getElementById('game-list');
 let currentEditId = null;
 
-// GET
+// GET alla
 async function getGames() {
     try {
         const response = await fetch('http://localhost:3000/games');
@@ -24,6 +24,26 @@ async function getGames() {
         console.error("Kunde inte hämta spel", error);
     }
 }
+
+// Get en
+async function getSingleGame(id) {
+    try {
+        const response = await fetch(`http://localhost:3000/games/${id}`);
+        
+        if (!response.ok) {
+            throw new Error('Kunde inte hitta spelet');
+        }
+
+        const game = await response.json();
+        
+        console.log("Hämtat spel:", game);
+        alert(`Valt spel: ${game.title}`);
+        
+    } catch (error) {
+        console.error("Fel vid hämtning av spel:", error);
+    }
+}
+
 
 // POST/PUT
 gameForm.addEventListener('submit', async (e) => {
